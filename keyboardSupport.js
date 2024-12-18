@@ -16,6 +16,7 @@ function findButton(key) {
             content = "=";
             break;
         case "Backspace":
+        case "Delete":
             content = "DEL";
             break;
         case "Escape":
