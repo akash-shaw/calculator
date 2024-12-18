@@ -1,11 +1,11 @@
 const ERROR_MESSAGE = "MATH ERROR";
 
 function add(a,b){
-    return a+b;
+    return (a*10+b*10)/10;
 }
 
 function subtract(a,b){
-    return a-b;
+    return (a*10-b*10)/10;
 }
 
 function multiply(a,b){
