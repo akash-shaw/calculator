@@ -46,7 +46,7 @@ const display = document.querySelector(".display");
 const operators = document.querySelectorAll(".operator");
 operators.forEach(operator => operator.addEventListener('click', e => {
     if (currentOperand2 != null) {
-        let result = operate(currentOperand1, currentOperand2, currentOperator);
+        let result = `${operate(currentOperand1, currentOperand2, currentOperator)}`;
         if (result != ERROR_MESSAGE) {
             currentOperand1 = result;
             currentOperator = e.target.textContent;
