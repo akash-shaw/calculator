@@ -10,9 +10,15 @@ function handleKeyPress(e) {
     } else if (operators.includes(key)) {
         // If the key is an operator
         switch(key){
-            case '*': simulateButtonPress("×");
-            case '/': simulateButtonPress("÷");
-            default: simulateButtonPress(key);
+            case '*':
+                simulateButtonPress("×");
+                break;    
+            case '/':
+                simulateButtonPress("÷");
+                break;
+            default:
+                simulateButtonPress(key);
+                break;
         }
     } else if (key === "Enter" || key === "=") {
         simulateButtonPress("=");
