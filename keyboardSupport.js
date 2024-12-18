@@ -2,33 +2,30 @@ window.addEventListener("keydown", handleKeyPress);
 
 function handleKeyPress(e) {
     const key = e.key;
-    if(findButton(key)){
+    if (findButton(key)) {
         e.preventDefault();
         findButton(key).click();
     }
-    else{
-        console.log("pressed "+findButton(key));
-    }
 }
 
-function findButton(key){
+function findButton(key) {
     let content;
-    switch(key){
+    switch (key) {
         case "Enter":
         case "=":
-            content="=";
+            content = "=";
             break;
         case "Backspace":
-            content="DEL";
+            content = "DEL";
             break;
         case "Escape":
-            content="AC";
+            content = "AC";
             break;
         case '*':
-            content="×";
-            break;    
+            content = "×";
+            break;
         case '/':
-            content="÷";
+            content = "÷";
             break;
         default:
             content = key;
