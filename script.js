@@ -37,7 +37,7 @@ function operate(a, b, operator) {
     }
 }
 
-let currentOperand1;
+let currentOperand1 = "0";
 let currentOperand2;
 let currentOperator;
 
@@ -58,41 +58,42 @@ operators.forEach(operator => operator.addEventListener('click', e=>{
             display.textContent = ERROR_MESSAGE;
         }
     }
-    else if(currentOperand1!=null){
+    else{
         currentOperator = e.target.textContent;
         display.textContent = currentOperand1+ currentOperator;
-    }
-    else if(currentOperand1==null){
-        currentOperand1 = 0;
-        currentOperator = e.target.textContent;
-        display.textContent = currentOperand1 + currentOperator;
     }
 }));
 
 const operands = document.querySelectorAll(".operand");
 operands.forEach(operand => operand.addEventListener('click', e=>{
     if(currentOperator==null){
-        if(currentOperand1==null) currentOperand1 = e.target.textContent;
-        else currentOperand1 += e.target.textContent;
-        display.textContent = currentOperand1;
+        if( !(e.target.textContent=='.' && isDotPresent(currentOperand1))){
+            if(currentOperand1=='0' && e.target.textContent=='.') currentOperand1 = "0.";
+            else if(currentOperand1=='0') currentOperand1 = e.target.textContent;
+            else currentOperand1 += e.target.textContent;
+            display.textContent = currentOperand1;
+        }
     }
     else{
-        if(currentOperand2==null) currentOperand2 = e.target.textContent;
-        else currentOperand2 += e.target.textContent;
-        display.textContent = currentOperand1 + currentOperator + currentOperand2;
+        if( !(e.target.textContent=='.' && isDotPresent(currentOperand2) )){
+            if(currentOperand2==null && e.target.textContent=='.') currentOperand2 = "0."
+            else if(currentOperand2==null) currentOperand2 = e.target.textContent;
+            else currentOperand2 += e.target.textContent;
+            display.textContent = currentOperand1 + currentOperator + currentOperand2;
+        }
     }
 }));
 
 const equalBtn = document.querySelector(".equals");
 equalBtn.addEventListener('click', e=>{
     if(currentOperand2!=null){
-        let result = operate(currentOperand1, currentOperand2, currentOperator);
-        currentOperand1 = result==ERROR_MESSAGE ? null : result;
+        let result = `${operate(currentOperand1, currentOperand2, currentOperator)}`;
+        currentOperand1 = result==ERROR_MESSAGE ? 0 : result;
         currentOperator=null;
         currentOperand2=null;
         display.textContent = result==ERROR_MESSAGE ? ERROR_MESSAGE : currentOperand1;
     }
-    else if(currentOperand1!=null){
+    else{
         currentOperator=null;
         display.textContent = currentOperand1;
     }
@@ -121,8 +122,8 @@ delBtn.addEventListener('click', ()=>{
             currentOperand1 = currentOperand1.slice(0,-1);
         }
         else if(display.textContent.length==1){
-            display.textContent = display.textContent.trim().slice(0, -1);
-            currentOperand1 = null;
+            currentOperand1 = "0";
+            display.textContent = currentOperand1;
         }
     }
 });
@@ -131,10 +132,10 @@ const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener('click', reset);
 
 function reset(){
-    currentOperand1 = null;
+    currentOperand1 = "0";
     currentOperand2 = null;
     currentOperator = null;
-    display.textContent = null;
+    display.textContent = currentOperand1;
 };
 
 function isOperator(op){
@@ -143,7 +144,12 @@ function isOperator(op){
         case '-':
         case '×':
         case '÷':
-        case '%': return true
+        case '%': return true;
         default: return false;
     }
+}
+
+function isDotPresent(str){
+    if(!str) return false;
+    else return str.includes(".");
 }
